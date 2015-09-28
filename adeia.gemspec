@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Adeia::VERSION
   s.authors     = ["khcr"]
   s.email       = ["kocher.ke@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Adeia."
-  s.description = "TODO: Description of Adeia."
+  s.homepage    = "http://github.com/JS-Tech/adeia"
+  s.summary     = "A Rails plugin which add authentification and a permissions control system."
+  s.description = s.summary
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
