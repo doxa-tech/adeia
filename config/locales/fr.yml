@@ -1,0 +1,6 @@
+fr:
+  exceptions:
+    messages:
+      login_required: "Veuillez vous connecter pour accéder à cette page !"
+      access_denied: "Vous n'êtes pas autorisé à accéder à cette page !"
+      missing_params: "Le paramètre %{params} est manquant !"
