@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "bcrypt-ruby"
+  s.add_development_dependency "rspec-rails"
 end
