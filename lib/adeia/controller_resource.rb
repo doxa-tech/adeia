@@ -7,7 +7,15 @@ module Adeia
 
     def self.add_before_filter(controller_class, method, **args)
       controller_class.send(:before_action, args.slice(:only, :except, :if, :unless)) do |controller|
-        ControllerResource.send(method)
+        ControllerResource.send(method, controller)
+      end
+    end
+
+    def self.load_resoure_or_records_and_authorize(controller)
+      if controller.action_name == "index"
+        controller.authorize_and_load_records!
+      else
+        controller.load_and_authorize!
       end
     end
 
@@ -23,6 +31,7 @@ module Adeia
     def load_resource
       begin
         @resource = resource_class.find(@controller.params.fetch(:id))
+        @controller.instance_variable_set("@#{resource_name}", @resource)
       rescue KeyError
         raise MissingParams.new(:id)
       end
@@ -40,14 +49,7 @@ module Adeia
       else
         resource_class.none
       end
-    end
-
-    def load_resoure_or_records_and_authorize!
-      if @action == "index"
-        @controller.set_instance_var("#{resource_name.pluralize}", authorize_and_load_records!)
-      else
-        @controller.set_instance_var("#{resource_name}", load_and_authorize!)
-      end
+      @controller.instance_variable_set("@#{resource_name.pluralize}", @records)
     end
 
     def authorization

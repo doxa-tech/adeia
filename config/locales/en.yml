@@ -1,6 +1,6 @@
 en:
   exceptions:
     messages:
-      login_required: "Please login in before visiting this page !"
+      login_required: "Please login before visiting this page !"
       access_denied: "You don't have access to this page !"
       missing_params: "params %{params} is missing !"

@@ -32,7 +32,7 @@ module Adeia
 
     def token_rights(right_name)
       @permission_token ||= Adeia::Token.find_by_token(@token)
-      if @permission_token && @permission_token.valid?
+      if @permission_token && @permission_token.valid
         @token_rights ||= Adeia::Permission.joins(:element).where("ownerships.id = ? AND elements.name = ? AND #{right_name}_right = ?", @permission_token.permission_id, @controller, true)
       else
         @token_rights ||= Adeia::Permission.none
@@ -40,11 +40,11 @@ module Adeia
     end
 
     def user_groups
-      @user_groups ||= Adeia::Group.joins(:group_user).where(user: @user)
+      @user_groups ||= Adeia::Group.joins(:group_users).where(adeia_group_users: { user_id: @user.id })
     end
 
     def owners
-      @owners ||= @user + user_groups
+      @owners ||= user_groups.push @user
     end
 
   end

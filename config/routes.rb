@@ -1,2 +1,2 @@
-Rails.application.routes.draw do
+Adeia::Engine.routes.draw do
 end
