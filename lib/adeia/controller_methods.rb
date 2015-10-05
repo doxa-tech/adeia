@@ -7,7 +7,7 @@ module Adeia
     module ClassMethods
 
       def load_and_authorize(**args)
-        ControllerResource.add_before_filter(self, :load_resoure_or_records_and_authorize, **args)
+        ControllerResource.add_before_filter(self, :load_resource_or_records_and_authorize, **args)
       end
 
     end

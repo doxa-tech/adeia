@@ -11,29 +11,29 @@ module Adeia
     end
 
     def read_rights
-      @read_rights ||= Adeia::Permission.joins(:element).where(owner: owners, read_right: true, elements: {name: @controller})
+      @read_rights ||= Adeia::Permission.joins(:element).where(owner: owners, read_right: true, adeia_elements: {name: @controller})
     end
 
     def create_rights
-      @create_rights ||= Adeia::Permission.joins(:element).where(owner: owners, create_right: true, elements: {name: @controller})
+      @create_rights ||= Adeia::Permission.joins(:element).where(owner: owners, create_right: true, adeia_elements: {name: @controller})
     end
 
     def update_rights
-      @update_rights ||= Adeia::Permission.joins(:element).where(owner: owners, update_right: true, elements: {name: @controller})
+      @update_rights ||= Adeia::Permission.joins(:element).where(owner: owners, update_right: true, adeia_elements: {name: @controller})
     end
 
     def destroy_rights
-      @destroy_rights ||= Adeia::Permission.joins(:element).where(owner: owners, destroy_right: true, elements: {name: @controller})
+      @destroy_rights ||= Adeia::Permission.joins(:element).where(owner: owners, destroy_right: true, adeia_elements: {name: @controller})
     end
 
     def action_rights
-      @action_rights ||= Adeia::Permission.joins(:actions, :element).where(owner: owners, elements: {name: @controller}, actions: {name: @action})
+      @action_rights ||= Adeia::Permission.joins(:actions, :element).where(owner: owners, adeia_elements: {name: @controller}, adeia_actions: {name: @action})
     end
 
     def token_rights(right_name)
       @permission_token ||= Adeia::Token.find_by_token(@token)
-      if @permission_token && @permission_token.valid
-        @token_rights ||= Adeia::Permission.joins(:element).where("ownerships.id = ? AND elements.name = ? AND #{right_name}_right = ?", @permission_token.permission_id, @controller, true)
+      if @permission_token && @permission_token.is_valid
+        @token_rights ||= Adeia::Permission.joins(:element).where(id: @permission_token.permission_id, adeia_elements: { name: @controller }, "#{right_name}_right": true)
       else
         @token_rights ||= Adeia::Permission.none
       end

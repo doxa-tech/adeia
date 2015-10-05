@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003150943) do
+ActiveRecord::Schema.define(version: 20151003150806) do
 
   create_table "adeia_action_permissions", force: :cascade do |t|
     t.integer  "action_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20151003150943) do
 
   create_table "adeia_tokens", force: :cascade do |t|
     t.string   "token"
-    t.boolean  "valid"
+    t.boolean  "is_valid"
     t.integer  "permission_id"
     t.date     "exp_at"
     t.datetime "created_at",    null: false
@@ -78,23 +78,5 @@ ActiveRecord::Schema.define(version: 20151003150943) do
   end
 
   add_index "adeia_tokens", ["permission_id"], name: "index_adeia_tokens_on_permission_id"
-
-  create_table "articles", force: :cascade do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id"
-
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "password_digest"
-    t.string   "remember_token"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
 
 end

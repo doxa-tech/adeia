@@ -10,16 +10,17 @@ Gem::Specification.new do |s|
   s.authors     = ["khcr"]
   s.email       = ["kocher.ke@gmail.com"]
   s.homepage    = "http://github.com/JS-Tech/adeia"
-  s.summary     = "A Rails plugin which add authentification and a permissions control system."
+  s.summary     = "An authorization gem for Rails that allows you to have the complete control of your app."
   s.description = s.summary
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.2.4"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "bcrypt-ruby"
   s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "factory_girl_rails"
 end

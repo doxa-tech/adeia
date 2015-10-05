@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  load_and_authorize
+  #load_and_authorize
 
   def index
-    #@articles = Article.all
-    #authorize_and_load_records!
+    @articles = Article.all
+    authorize!
   end
 
   def show
