@@ -1,4 +1,5 @@
 require 'factory_girl_rails'
+require 'rspec/active_model/mocks'
 
 FactoryGirl.definition_file_paths = [ File.join(File.dirname(__FILE__), '../spec/factories') ]
 FactoryGirl.find_definitions

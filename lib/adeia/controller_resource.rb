@@ -38,8 +38,8 @@ module Adeia
     end
 
     def load_records
-      rights = authorization.read_rights + authorization.token_rights
-      resource_ids = rights.pluck(:resource_id).compact
+      read_rights, token_rights = authorization.read_rights, authorization.token_rights
+      rights, resource_ids = read_rights[0] + token_rights[0], read_rights[1] + token_rights[1]
       @records ||= if rights.any? { |r| r.permission_type == "all_entries" }
         resource_class.all
       elsif rights.any? { |r| r.permission_type == "on_ownerships" }

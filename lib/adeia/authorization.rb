@@ -6,15 +6,18 @@ module Adeia
   class Authorization < Database
 
     def authorize!
-      @rights = token_rights(right_name)
+      @rights, @resource_ids = token_rights(right_name)
       raise LoginRequired if @rights.empty? && @user.nil?
-      @rights.push(send("#{right_name}_rights")) if @user
-      raise AccessDenied unless authorize?
+      if @user
+        rights, resource_ids = send("#{right_name}_rights")
+        @rights, @resource_ids = @rights + rights, @resource_ids + resource_ids
+      end
+      raise AccessDenied unless @rights.any? && authorize?
     end
 
     def can?
-      @rights = token_rights.push(send("#{right_name}_rights"))
-      authorize?
+      @rights, @resource_ids = token_rights.push(send("#{right_name}_rights"))
+      @rights.any? && authorize?
     end
 
     private
@@ -32,7 +35,7 @@ module Adeia
     end
 
     def on_entry?
-      @rights.pluck(:resource_id).compact.include? @resource.try(:id)
+      @resource_ids.include? @resource.try(:id)
     end
 
     def right_names
