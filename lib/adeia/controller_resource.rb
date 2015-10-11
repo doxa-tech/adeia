@@ -38,8 +38,8 @@ module Adeia
     end
 
     def load_records
-      read_rights, token_rights = authorization.read_rights, authorization.token_rights(:read)
-      rights, resource_ids = read_rights[0] + token_rights[0], read_rights[1] + token_rights[1]
+      rights = authorization.read_rights.merge(authorization.token_rights(:read)) { |key, v1, v2| v1 + v2 }
+      rights, resource_ids = rights[:rights], rights[:resource_ids]
       @records ||= if rights.any? { |r| r.permission_type == "all_entries" }
         resource_class.all
       elsif rights.any? { |r| r.permission_type == "on_ownerships" }

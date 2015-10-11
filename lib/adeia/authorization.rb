@@ -6,18 +6,16 @@ module Adeia
   class Authorization < Database
 
     def authorize!
-      @rights, @resource_ids = token_rights(right_name)
-      raise LoginRequired if @rights.empty? && @user.nil?
-      if @user
-        rights, resource_ids = send("#{right_name}_rights")
-        @rights, @resource_ids = @rights + rights, @resource_ids + resource_ids
-      end
+      rights = token_rights(right_name)
+      raise LoginRequired if rights[:rights].empty? && @user.nil?
+      rights = rights.merge(send("#{right_name}_rights")) { |key, v1, v2| v1 + v2 } if @user
+      @rights, @resource_ids = rights[:rights], rights[:resource_ids]
       raise AccessDenied unless @rights.any? && authorize?
     end
 
     def can?
-      rights, token_rights = send("#{right_name}_rights"), token_rights(right_name)
-      @rights, @resource_ids = rights[0] + token_rights[0], rights[1] + rights[1]
+      rights = token_rights(right_name).merge(send("#{right_name}_rights")) { |key, v1, v2| v1 + v2 }
+      @rights, @resource_ids = rights[:rights], rights[:resource_ids]
       @rights.any? && authorize?
     end
 

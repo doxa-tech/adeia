@@ -13,30 +13,30 @@ module Adeia
     def read_rights
       @read_rights ||= Adeia::Permission.joins(:element).where(owner: owners, read_right: true, adeia_elements: {name: @controller})
       @read_resource_ids ||= @read_rights.pluck(:resource_id).compact
-      return @read_rights, @read_resource_ids
+      return { rights: @read_rights, resource_ids: @read_resource_ids }
     end
 
     def create_rights
       @create_rights ||= Adeia::Permission.joins(:element).where(owner: owners, create_right: true, adeia_elements: {name: @controller})
-      return @create_rights, []
+      return { rights: @create_rights }
     end
 
     def update_rights
       @update_rights ||= Adeia::Permission.joins(:element).where(owner: owners, update_right: true, adeia_elements: {name: @controller})
       @update_resource_ids ||= @update_rights.pluck(:resource_id).compact
-      return @update_rights, @update_resource_ids
+      return { rights: @update_rights, resource_ids: @update_resource_ids }
     end
 
     def destroy_rights
       @destroy_rights ||= Adeia::Permission.joins(:element).where(owner: owners, destroy_right: true, adeia_elements: {name: @controller})
       @destroy_resource_ids ||= @destroy_rights.pluck(:resource_id).compact
-      return @destroy_rights, @destroy_resource_ids
+      return { rights: @destroy_rights, resource_ids: @destroy_resource_ids }
     end
 
     def action_rights
       @action_rights ||= Adeia::Permission.joins(:actions, :element).where(owner: owners, adeia_elements: {name: @controller}, adeia_actions: {name: @action})
       @action_resource_ids ||= @action_rights.pluck(:resource_id).compact
-      return @action_rights, @action_resource_ids
+      return { rights: @action_rights, resource_ids: @action_resource_ids }
     end
 
     def token_rights(right_name)
@@ -44,9 +44,9 @@ module Adeia
       if @permission_token && @permission_token.is_valid
         @token_rights ||= Adeia::Permission.joins(:element).where(id: @permission_token.permission_id, adeia_elements: { name: @controller }, "#{right_name}_right": true)
         @token_resource_ids ||= @token_rights.pluck(:resource_id).compact
-        return @token_rights, @token_resource_ids
+        return { rights: @token_rights, resource_ids: @token_resource_ids }
       else
-        return Adeia::Permission.none, []
+        return { rights: Adeia::Permission.none }
       end
     end
 
