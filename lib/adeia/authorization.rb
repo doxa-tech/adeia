@@ -16,7 +16,8 @@ module Adeia
     end
 
     def can?
-      @rights, @resource_ids = token_rights.push(send("#{right_name}_rights"))
+      rights, token_rights = send("#{right_name}_rights"), token_rights(right_name)
+      @rights, @resource_ids = rights[0] + token_rights[0], rights[1] + rights[1]
       @rights.any? && authorize?
     end
 
@@ -31,11 +32,11 @@ module Adeia
     end
 
     def on_ownerships?
-      @rights.any? { |r| r.permission_type == "on_ownerships" } && @user && @resource.try(:user) == @user
+      @user && @resource && @rights.any? { |r| r.permission_type == "on_ownerships" } && @resource.user == @user
     end
 
     def on_entry?
-      @resource_ids.include? @resource.try(:id)
+      @resource && @resource_ids.include?(@resource.id)
     end
 
     def right_names

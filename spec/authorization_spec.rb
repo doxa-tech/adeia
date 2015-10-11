@@ -29,16 +29,108 @@ module Adeia
     end
 
     context "with read permission" do
+      before(:each) { create(:permission, owner: user, read_right: true) }
 
       it "allows the user in the index action" do
-        create(:permission, owner: user, read_right: true)
         authorization = Authorization.new("admin/articles", "index", nil, nil, user)
         expect { authorization.authorize! }.not_to raise_error
       end
 
       it "allows the user in the show action" do
-        create(:permission, owner: user, read_right: true)
         authorization = Authorization.new("admin/articles", "show", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with create permission" do
+      before(:each) { create(:permission, owner: user, create_right: true) }
+
+      it "allows the user in the new action" do
+        authorization = Authorization.new("admin/articles", "new", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+      it "allows the user in the create action" do
+        authorization = Authorization.new("admin/articles", "create", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with update permission" do
+      before(:each) { create(:permission, owner: user, update_right: true) }
+
+      it "allows the user in the edit action" do
+        authorization = Authorization.new("admin/articles", "edit", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+      it "allows the user in the update action" do
+        authorization = Authorization.new("admin/articles", "update", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with destroy permission" do
+      before(:each) { create(:permission, owner: user, destroy_right: true) }
+
+      it "allows the user in the destroy action" do
+        authorization = Authorization.new("admin/articles", "destroy", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with an specific action permission" do
+      before(:each) { create(:permission, owner: user, action: "share") }
+
+      it "allows the user in the destroy action" do
+        authorization = Authorization.new("admin/articles", "share", nil, nil, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with an 'on ownership' permission" do
+
+      it "does not allow a visitor" do
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
+        token = create(:token, permission: permission).token
+        authorization = Authorization.new("admin/articles", "edit", token, nil, nil)
+        expect { authorization.authorize! }.to raise_error AccessDenied
+      end
+
+      it "does not allow when no resource is provided" do
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
+        authorization = Authorization.new("admin/articles", "edit", nil, nil, user)
+        expect { authorization.authorize! }.to raise_error AccessDenied
+      end
+
+      it "does not allow when the resource is not his" do
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
+        foreign_user = mock_model(User)
+        article = mock_model(Article, user: foreign_user)
+        authorization = Authorization.new("admin/articles", "edit", nil, article, user) 
+        expect { authorization.authorize! }.to raise_error AccessDenied
+      end
+
+      it "allows the user" do
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
+        article = mock_model(Article, user: user)
+        authorization = Authorization.new("admin/articles", "edit", nil, article, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with an 'on entry' permission" do
+
+      it "allows the user" do
+        article = mock_model(Article)
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_entry", resource_id: article.id)
+        authorization = Authorization.new("admin/articles", "edit", nil, article, user)
         expect { authorization.authorize! }.not_to raise_error
       end
 
