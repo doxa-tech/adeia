@@ -15,7 +15,7 @@ FactoryGirl.define do
       action 'share'
     end
     element { Adeia::Element.find_or_create_by(name: element_name) }
-    owner { Adeia::Group.find_or_create_by(name: group_name) }
+    owner { Adeia::Group.find_by_name(group_name) || create(:group, name: group_name) }
     
     permission_type { Adeia::Permission.permission_types[type_name] }
 
@@ -25,6 +25,15 @@ FactoryGirl.define do
     update_right false
     destroy_right false
     actions {[ Adeia::Action.find_or_create_by(name: action) ]}
+  end
+
+  factory :group, class: "Adeia::Group" do
+    name "admin"
+  end
+
+  factory :user_group, class: "Adeia::GroupUser" do
+    group { Adeia::Group.find_by_name("admin") || create(:group) }
+    user { nil }
   end
 
 end

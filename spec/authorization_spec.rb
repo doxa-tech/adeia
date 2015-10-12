@@ -94,22 +94,20 @@ module Adeia
     end
 
     context "with an 'on ownership' permission" do
+      let!(:permission) { create(:permission, owner: user, update_right: true, type_name: "on_ownerships") }
 
       it "does not allow a visitor" do
-        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
         token = create(:token, permission: permission).token
         authorization = Authorization.new("admin/articles", "edit", token, nil, nil)
         expect { authorization.authorize! }.to raise_error AccessDenied
       end
 
       it "does not allow when no resource is provided" do
-        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
         authorization = Authorization.new("admin/articles", "edit", nil, nil, user)
         expect { authorization.authorize! }.to raise_error AccessDenied
       end
 
       it "does not allow when the resource is not his" do
-        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
         foreign_user = mock_model(User)
         article = mock_model(Article, user: foreign_user)
         authorization = Authorization.new("admin/articles", "edit", nil, article, user) 
@@ -117,7 +115,6 @@ module Adeia
       end
 
       it "allows the user" do
-        permission = create(:permission, owner: user, update_right: true, type_name: "on_ownerships")
         article = mock_model(Article, user: user)
         authorization = Authorization.new("admin/articles", "edit", nil, article, user)
         expect { authorization.authorize! }.not_to raise_error
@@ -127,10 +124,34 @@ module Adeia
 
     context "with an 'on entry' permission" do
 
+      it "does not allow when there is no resource" do
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_entry", resource_id: 1)
+        authorization = Authorization.new("admin/articles", "edit", nil, nil, user)
+        expect { authorization.authorize! }.to raise_error AccessDenied
+      end
+
+      it "does not allow when the resource is not allowed" do
+        article = mock_model(Article)
+        permission = create(:permission, owner: user, update_right: true, type_name: "on_entry", resource_id: article.id + 1)
+        authorization = Authorization.new("admin/articles", "edit", nil, article, user)
+        expect { authorization.authorize! }.to raise_error AccessDenied
+      end
+
       it "allows the user" do
         article = mock_model(Article)
         permission = create(:permission, owner: user, update_right: true, type_name: "on_entry", resource_id: article.id)
         authorization = Authorization.new("admin/articles", "edit", nil, article, user)
+        expect { authorization.authorize! }.not_to raise_error
+      end
+
+    end
+
+    context "with an inherited permission" do
+
+      it "allows the user" do
+        group = create(:user_group, user: user).group
+        permission = create(:permission, owner: group, create_right: true)
+        authorization = Authorization.new("admin/articles", "new", nil, nil, user)
         expect { authorization.authorize! }.not_to raise_error
       end
 
