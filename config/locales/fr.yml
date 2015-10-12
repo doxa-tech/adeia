@@ -4,3 +4,6 @@ fr:
       login_required: "Veuillez vous connecter pour accéder à cette page !"
       access_denied: "Vous n'êtes pas autorisé à accéder à cette page !"
       missing_params: "Le paramètre %{params} est manquant !"
+  errors:
+    messages:
+      right_required: "Lorsque vous voulez créer une permission liée aux possessions de l'utilisateur, vous devez cocher au moins un droit ou ajouter une action"

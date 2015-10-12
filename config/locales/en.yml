@@ -4,3 +4,6 @@ en:
       login_required: "Please login before visiting this page !"
       access_denied: "You don't have access to this page !"
       missing_params: "params %{params} is missing !"
+  errors:
+    messages:
+      right_required: "If you want to add a permission linked to user's ownerships, please check at least one right or add an action"
