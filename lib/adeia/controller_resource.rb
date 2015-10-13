@@ -43,7 +43,7 @@ module Adeia
       @records ||= if rights.any? { |r| r.permission_type == "all_entries" }
         resource_class.all
       elsif rights.any? { |r| r.permission_type == "on_ownerships" }
-        resource_class.where(user_id: @user.id, id: resource_ids)
+        resource_class.where("user_id = ? OR id IN (?)", @user.id, resource_ids)
       elsif rights.any? { |r| r.permission_type == "on_entry" }
         resource_class.where(id: resource_ids)
       else
@@ -56,9 +56,12 @@ module Adeia
       @authorization ||= Authorization.new(@controller_name, @action_name, @token, @resource, @user)
     end
 
-
     def authorize!
       authorization.authorize!
+    end
+
+    def check_permissions!
+      authorization.check_permissions!
     end
 
     def can?

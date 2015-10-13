@@ -36,4 +36,18 @@ FactoryGirl.define do
     user { nil }
   end
 
+  ### Test App factories
+
+  factory :user do
+    name "admin"
+    password "12341"
+    password_confirmation "12341"
+  end
+  
+  factory :article do
+    title "Des ours meurt chaque année"
+    content "Chaque année, plus de 1000 ourse blancs meurt"
+    user { User.find_by_name("editor") || create(:user, name: "editor") }
+  end
+
 end

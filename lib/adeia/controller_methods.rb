@@ -26,7 +26,7 @@ module Adeia
 
     def authorize_and_load_records!(**args)
       controller_resource = ControllerResource.new(self, **args)
-      controller_resource.authorize!
+      controller_resource.check_permissions!
       return controller_resource.load_records
     end
 

@@ -1,23 +1,20 @@
 class ArticlesController < ApplicationController
-  #before_action :set_article, only: [:show, :edit, :update, :destroy]
-  #load_and_authorize
+  load_and_authorize only: [:edit]
 
   def index
-    @articles = Article.all
-    #authorize!
+    authorize_and_load_records!
   end
 
   def show
-    #load_and_authorize!
+    load_and_authorize!
   end
 
   def new
-    #authorize!
+    authorize!
     @article = Article.new
   end
 
   def edit
-    #load_and_authorize!
   end
 
   def create
@@ -44,10 +41,6 @@ class ArticlesController < ApplicationController
   end
 
   private
-
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
     def article_params
       params.require(:article).permit(:title, :content)

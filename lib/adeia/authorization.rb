@@ -13,9 +13,13 @@ module Adeia
       raise AccessDenied unless @rights.any? && authorize?
     end
 
+    def check_permissions!
+      load_permissions
+      raise AccessDenied unless @rights.any?
+    end
+
     def can?
-      rights = token_rights(right_name).merge(send("#{right_name}_rights")) { |key, v1, v2| v1 + v2 }
-      @rights, @resource_ids = rights[:rights], rights[:resource_ids]
+      load_permissions
       @rights.any? && authorize?
     end
 
@@ -43,6 +47,11 @@ module Adeia
 
     def right_name
       right_names.select { |k, v| v.include? @action.to_sym }.keys[0] || :action
+    end
+
+    def load_permissions
+      rights = token_rights(right_name).merge(send("#{right_name}_rights")) { |key, v1, v2| v1 + v2 }
+      @rights, @resource_ids = rights[:rights], rights[:resource_ids]
     end
 
   end
