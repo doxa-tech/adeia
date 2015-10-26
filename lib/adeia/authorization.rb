@@ -14,8 +14,11 @@ module Adeia
     end
 
     def check_permissions!
-      load_permissions
-      raise AccessDenied unless @rights.any?
+      if !@user
+        raise LoginRequired
+      elsif load_permissions && @rights.empty?
+        raise AccessDenied
+      end
     end
 
     def can?

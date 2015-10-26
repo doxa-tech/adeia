@@ -7,3 +7,7 @@ en:
   errors:
     messages:
       right_required: "If you want to add a permission linked to user's ownerships, please check at least one right or add an action"
+  adeia:
+    permissions:
+      index:
+        title: "Permissions"

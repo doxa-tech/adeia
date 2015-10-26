@@ -2,6 +2,8 @@ require "adeia/controller_methods"
 
 module Adeia
   class Engine < ::Rails::Engine
+    require 'snaptable'
+
     isolate_namespace Adeia
 
     config.generators do |g|
@@ -11,8 +13,12 @@ module Adeia
       g.factory_girl false
     end
 
-    initializer 'Adeia.controller' do |app|
+    initializer 'Adeia.controller_methods' do |app|
       ActionController::Base.send :include, Adeia::ControllerMethods
+    end
+
+    initializer 'Adeia.sessions_helper' do |app|
+      ActionController::Base.send :include, Adeia::SessionsHelper
     end
 
   end
