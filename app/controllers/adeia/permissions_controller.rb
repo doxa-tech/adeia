@@ -41,7 +41,7 @@ module Adeia
     private
 
     def permission_params
-      params.require(:permission).permit(:element_id, :global_owner, :read_right, :create_right, :update_right, :destroy_right, :resource_id, actions_attributes: [:name])
+      params.require(:permission).permit(:permission_type, :element_id, :global_owner, :read_right, :create_right, :update_right, :destroy_right, :resource_id, actions_attributes: [:name])
     end
 
   end

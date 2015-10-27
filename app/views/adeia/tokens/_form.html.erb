@@ -1,0 +1,14 @@
+<%= form_for @token do |f| %>
+
+  <%= f.label :permission_id %>
+  <%= f.collection_select :permission_id, Adeia::Permission.all, :id, :full_name %>
+
+  <%= f.label :exp_at %>
+  <%= f.date_select :exp_at %>
+
+  <%= f.label :is_valid %>
+  <%= f.check_box :is_valid %>
+
+  <%= f.submit %>
+
+<% end %>

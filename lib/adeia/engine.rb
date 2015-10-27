@@ -1,4 +1,5 @@
 require "adeia/controller_methods"
+require "adeia/helpers/sessions_helper"
 
 module Adeia
   class Engine < ::Rails::Engine
@@ -18,7 +19,7 @@ module Adeia
     end
 
     initializer 'Adeia.sessions_helper' do |app|
-      ActionController::Base.send :include, Adeia::SessionsHelper
+      ActionController::Base.send :include, Adeia::Helpers::SessionsHelper
     end
 
   end

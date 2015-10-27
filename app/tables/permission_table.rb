@@ -5,7 +5,7 @@ class PermissionTable < BaseTable
   end
 
   def attributes
-    [:id, { element: :name }, { owner: :name }, :read_right, :create_right, :update_right, :destroy_right, :resource_id, :actions, :created_at, :updated_at]
+    [:id, :permission_type, { element: :name }, { owner: :name }, :read_right, :create_right, :update_right, :destroy_right, :resource_id, :actions, :created_at, :updated_at]
   end
 
   module Search

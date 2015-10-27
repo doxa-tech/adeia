@@ -29,6 +29,10 @@ class Adeia::Permission < ActiveRecord::Base
     end
   end
 
+  def full_name
+    "#{id} - #{element.name} - R:#{read_right} - C:#{create_right}- U:#{update_right} - D:#{destroy_right} - #{resource_id} - #{actions.to_a}"
+  end
+
   private
 
   def presence_of_resource_id

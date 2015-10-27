@@ -13,6 +13,9 @@ en:
     errors: 
       one: "There is 1 error in the form"
       other: "There are %{count} errors in the form"
+    header:
+      permissions: "Permissions"
+      tokens: "Tokens"
   adeia:
     permissions:
       form:
@@ -31,6 +34,19 @@ en:
         success: "Permission updated !"
       destroy:
         success: "Permission removed !"
+    tokens:
+      index:
+        title: "Tokens"
+      new:
+        title: "Create an access token"
+      create:
+        success: "Access token created !"
+      edit:
+        title: "Edit an access token"
+      update:
+        success: "Access token updated !"
+      destroy:
+        success: "Access token removed !"
   attributes:
   activerecord:
     attributes:
@@ -42,7 +58,10 @@ en:
         update_right: "Update"
         destroy_right: "Destroy"
         resource_id: "Resource ID"
-  permission:
+      adeia/token:
+        exp_at: "Expiration"
+        is_valid: "Valid ?"
+  adeia/permission:
     permission_types:
       all_entries: "All entries"
       on_ownerships: "On ownerships"

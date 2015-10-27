@@ -40,8 +40,8 @@ module Adeia
     end
 
     def token_rights(right_name)
-      @permission_token ||= Adeia::Token.find_by_token(@token)
-      if @permission_token && @permission_token.is_valid
+      @permission_token ||= Adeia::Token.find_by(token: @token)
+      if @permission_token && @permission_token.is_valid?
         @token_rights ||= Adeia::Permission.joins(:element).where(id: @permission_token.permission_id, adeia_elements: { name: @controller }, "#{right_name}_right": true)
         @token_resource_ids ||= @token_rights.pluck(:resource_id).compact
         return { rights: @token_rights, resource_ids: @token_resource_ids }

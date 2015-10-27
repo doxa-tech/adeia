@@ -26,9 +26,10 @@ module Adeia
       @controller = controller
       @action_name = args.fetch(:action, @controller.action_name)
       @controller_name = args.fetch(:controller, @controller.controller_path)
-      @token = args.fetch(:token, @controller.params[:token])
+      @token = args.fetch(:token, @controller.request.GET[:token])
       @resource = args[:resource]
       @user = @controller.current_user
+      store_location
     end
 
     def load_resource
@@ -83,6 +84,17 @@ module Adeia
 
     def resource_name
       resource_class.model_name.element
+    end
+
+
+    # Store the current url in session's variable
+    # 
+    # * *Args*    :
+    # 
+    # * *Returns* :
+    #
+    def store_location
+      @controller.request.cookie_jar[:return_to] = @controller.request.fullpath
     end
 
   end
