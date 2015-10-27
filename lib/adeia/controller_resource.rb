@@ -12,9 +12,12 @@ module Adeia
     end
 
     def self.load_resource_or_records_and_authorize(controller)
-      if controller.action_name == "index"
+      case controller.action_name
+      when "index"
         controller.authorize_and_load_records!
-      else
+      when "new", "create"
+        controller.authorize!
+      when "edit", "update", "destroy"
         controller.load_and_authorize!
       end
     end

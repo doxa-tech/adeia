@@ -1,0 +1,47 @@
+<%= form_for @permission do |f| %>
+
+  <%= render 'error_messages', object: f.object %>
+
+  <%= f.label :permission_type %>
+  <%= f.select :permission_type, options_for_enum(@permission, :permission_type) %>
+  
+  <%= f.label :element_id %>
+  <%= f.collection_select :element_id, Adeia::Element.all, :id, :name %>
+
+  <%= f.label :global_owner %>
+  <%= f.grouped_collection_select :global_owner, [ User, Adeia::Group ], :all, :human_name, :to_global_id, :name %>
+
+  <%= f.label :read_right %>
+  <%= f.check_box :read_right %>
+
+  <%= f.label :create_right %>
+  <%= f.check_box :create_right %>
+
+  <%= f.label :update_right %>
+  <%= f.check_box :update_right %>
+
+  <%= f.label :destroy_right %>
+  <%= f.check_box :destroy_right %>
+
+  <%= f.label :resource_id %>
+  <%= f.number_field :resource_id %>
+
+  <%= f.fields_for :actions, (@permission.actions.build unless @permission.actions.any?) do |action_f| %>
+    <div class="fields-for">
+      <div class="actions-fields">
+        <%= action_f.label :name %>
+        <%= action_f.text_field :name %>
+
+        <button class="remove-fields" data-type="actions"><%= t "adeia.permissions.form.actions.destroy" %></button>
+      </div>
+
+      <button class="add-fields" data-type="actions" data-count="<%= @permission.actions.count %>">
+        <%= t "adeia.permissions.form.actions.add" %>
+      </button>
+    </div>
+
+  <% end %>
+
+  <%= f.submit %>
+
+<% end %>

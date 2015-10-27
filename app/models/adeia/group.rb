@@ -3,4 +3,8 @@ class Adeia::Group < ActiveRecord::Base
   has_many :permissions, as: :owner
 
   validates :name, presence: true
+
+  def self.human_name
+    model_name.human
+  end
 end

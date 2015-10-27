@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Syncedchurch</title>
+  <title>Adeia</title>
   <%= stylesheet_link_tag    'adeia/application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'adeia/application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+  <%= render 'layouts/flash' %>
 
   <%= yield %>
 

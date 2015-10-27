@@ -7,7 +7,43 @@ en:
   errors:
     messages:
       right_required: "If you want to add a permission linked to user's ownerships, please check at least one right or add an action"
+  application:
+    back: "Back"
+    close: "Close"
+    errors: 
+      one: "There is 1 error in the form"
+      other: "There are %{count} errors in the form"
   adeia:
     permissions:
+      form:
+        actions:
+          add: "Add an action"
+          destroy: "Remove"
       index:
         title: "Permissions"
+      new:
+        title: "Create a permission"
+      create:
+        success: "Permission created !"
+      edit:
+        title: "Edit a permission"
+      update:
+        success: "Permission updated !"
+      destroy:
+        success: "Permission removed !"
+  attributes:
+  activerecord:
+    attributes:
+      adeia/permission:
+        permission_type: "Type"
+        global_owner: "Owner"
+        read_right: "Read"
+        create_right: "Create"
+        update_right: "Update"
+        destroy_right: "Destroy"
+        resource_id: "Resource ID"
+  permission:
+    permission_types:
+      all_entries: "All entries"
+      on_ownerships: "On ownerships"
+      on_entry: "On an entry"

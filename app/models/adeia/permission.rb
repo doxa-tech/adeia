@@ -7,11 +7,27 @@ class Adeia::Permission < ActiveRecord::Base
 
   enum permission_type: [:all_entries, :on_ownerships, :on_entry]
 
+  accepts_nested_attributes_for :actions, :allow_destroy => true, reject_if: proc { |a| a[:name].blank? }
+
   validates :owner, presence: true
   validates :element, presence: true
   validates :permission_type, presence: true
   validate :presence_of_resource_id
   validate :presence_of_a_right
+
+  def global_owner
+    self.owner.to_global_id if self.owner.present?
+  end
+
+  def global_owner=(owner)
+    self.owner = GlobalID::Locator.locate owner
+  end
+
+  def autosave_associated_records_for_actions
+    self.actions = actions.reject{ |a| a._destroy == true }.map do |action|
+      Adeia::Action.find_or_create_by(name: action.name)
+    end
+  end
 
   private
 

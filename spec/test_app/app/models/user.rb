@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
+  def self.human_name
+    model_name.human
+  end
+
   private
 
   def create_remember_token
