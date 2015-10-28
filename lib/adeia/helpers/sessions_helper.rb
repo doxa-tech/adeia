@@ -1,6 +1,11 @@
 module Adeia
   module Helpers
     module SessionsHelper
+      extend ActiveSupport::Concern
+
+      included do
+        helper_method :current_user, :signed_in?
+      end
 
       # Sign in a user with a cookie
       # 

@@ -4,4 +4,6 @@ Adeia::Engine.routes.draw do
 
   resources :tokens, except: :show
 
+  resources :groups, except: :show
+
 end

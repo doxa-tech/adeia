@@ -16,6 +16,7 @@ en:
     header:
       permissions: "Permissions"
       tokens: "Tokens"
+      groups: "Groups"
   adeia:
     permissions:
       form:

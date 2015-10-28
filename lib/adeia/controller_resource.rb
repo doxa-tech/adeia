@@ -87,7 +87,7 @@ module Adeia
     end
 
 
-    # Store the current url in session's variable
+    # Store the current url in a cookie
     # 
     # * *Args*    :
     # 
