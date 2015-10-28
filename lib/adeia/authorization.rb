@@ -22,7 +22,7 @@ module Adeia
     end
 
     def can?
-      load_permissions
+      merge_permissions(token_rights(right_name), send("#{@action}_rights"))
       @rights.any? && authorize?
     end
 
@@ -53,7 +53,11 @@ module Adeia
     end
 
     def load_permissions
-      rights = token_rights(right_name).merge(send("#{right_name}_rights")) { |key, v1, v2| v1 + v2 }
+      merge_permissions(token_rights(right_name), send("#{right_name}_rights"))
+    end
+
+    def merge_permissions(collection1, collection2)
+      rights = collection1.merge(collection2) { |key, v1, v2| v1 + v2 }
       @rights, @resource_ids = rights[:rights], rights[:resource_ids]
     end
 

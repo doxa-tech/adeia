@@ -1,0 +1,10 @@
+<%= form_for @group do |f| %>
+  
+  <%= render 'error_messages', object: f.object %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.submit %>
+
+<% end %>

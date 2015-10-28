@@ -48,6 +48,19 @@ en:
         success: "Access token updated !"
       destroy:
         success: "Access token removed !"
+    groups:
+      index:
+        title: "Groups"
+      new:
+        title: "Create a group"
+      create:
+        success: "Group created !"
+      edit:
+        title: "Edit an group"
+      update:
+        success: "Group updated !"
+      destroy:
+        success: "Group removed !"
   attributes:
   activerecord:
     attributes:
