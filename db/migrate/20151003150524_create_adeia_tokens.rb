@@ -3,7 +3,7 @@ class CreateAdeiaTokens < ActiveRecord::Migration
     create_table :adeia_tokens do |t|
       t.string :token
       t.boolean :is_valid
-      t.references :permission, index: true, foreign_key: true
+      t.references :adeia_permission, index: true, foreign_key: true
       t.date :exp_at
 
       t.timestamps null: false

@@ -1,8 +1,8 @@
 class Adeia::Permission < ActiveRecord::Base
   belongs_to :owner, polymorphic: true
-  belongs_to :element
+  belongs_to :element, foreign_key: :adeia_element_id
 
-  has_many :action_permissions, dependent: :destroy
+  has_many :action_permissions, foreign_key: :adeia_permission_id, dependent: :destroy
   has_many :actions, through: :action_permissions
 
   enum permission_type: [:all_entries, :on_ownerships, :on_entry]

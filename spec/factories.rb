@@ -3,7 +3,6 @@ FactoryGirl.define do
   factory :token, class: "Adeia::Token" do
     token { SecureRandom.urlsafe_base64 }
     is_valid true
-    permission { create(:permission) }
     exp_at { 1.month.from_now }
   end
 

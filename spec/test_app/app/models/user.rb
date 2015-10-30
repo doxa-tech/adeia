@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   before_save :create_remember_token
 
   def self.human_name
-    model_name.human
+    model_name.i18n_key
   end
 
   private

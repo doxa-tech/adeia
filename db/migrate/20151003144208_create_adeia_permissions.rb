@@ -2,7 +2,7 @@ class CreateAdeiaPermissions < ActiveRecord::Migration
   def change
     create_table :adeia_permissions do |t|
       t.references :owner, polymorphic: true, index: true
-      t.references :element, index: true, foreign_key: true
+      t.references :adeia_element, index: true, foreign_key: true
       t.integer :permission_type
       t.boolean :read_right
       t.boolean :create_right
