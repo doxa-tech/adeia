@@ -1,4 +1,5 @@
 require 'adeia/controller_resource'
+require 'adeia/exceptions'
 
 module Adeia
 
@@ -8,6 +9,10 @@ module Adeia
 
       def load_and_authorize(**args)
         ControllerResource.add_before_filter(self, :load_resource_or_records_and_authorize, **args)
+      end
+
+      def require_login(**args)
+        ControllerResource.add_before_filter(self, :require_login, **args)
       end
 
     end
@@ -32,6 +37,10 @@ module Adeia
 
     def authorize!(**args)
       ControllerResource.new(self, **args).authorize!
+    end
+
+    def require_login!
+      raise LoginRequired unless signed_in?
     end
 
     def can?(action, controller=nil, resource=nil)

@@ -15,11 +15,15 @@ module Adeia
       case controller.action_name
       when "index"
         controller.authorize_and_load_records!
-      when "new", "create"
-        controller.authorize!
       when "edit", "update", "destroy"
         controller.load_and_authorize!
+      else
+        controller.authorize!
       end
+    end
+
+    def self.require_login(controller)
+      controller.require_login!
     end
 
     def initialize(controller, **args)

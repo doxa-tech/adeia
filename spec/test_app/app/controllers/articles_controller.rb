@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   load_and_authorize only: [:edit]
+  require_login only: [:update]
 
   def index
     authorize_and_load_records!
@@ -18,6 +19,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    require_login!
     @article = Article.new(article_params)
     @article.user = current_user
     if @article.save
@@ -28,6 +30,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to @article, notice: 'Article was successfully updated.'
     else
@@ -36,6 +39,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_url, notice: 'Article was successfully destroyed.'
   end
