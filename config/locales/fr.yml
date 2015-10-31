@@ -6,7 +6,7 @@ fr:
       missing_params: "Le paramètre %{params} est manquant !"
   errors:
     messages:
-      right_required: "Lorsque vous voulez créer une permission liée aux possessions de l'utilisateur, vous devez cocher au moins un droit ou ajouter une action"
+      right_required: "Vous devez cocher au moins un droit ou ajouter une action"
   application:
     back: "Retour"
     close: "fermer"

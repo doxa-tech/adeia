@@ -33,6 +33,40 @@ class Adeia::Permission < ActiveRecord::Base
     "#{id} - #{element.name} - R:#{read_right} - C:#{create_right}- U:#{update_right} - D:#{destroy_right} - #{resource_id} - #{actions.to_a}"
   end
 
+  def self.add(**args)
+    self.create!(**conditions(args))
+  end
+
+  def self.find_or_add_by(**args)
+    conditions = conditions(args)
+    if permission = self.where(**conditions).first
+      permission
+    else
+      self.create!(**conditions(args))
+    end
+  end
+
+  def self.fetch_element_and_actions(element_name, action_names)
+    actions = action_names.map { |action| Adeia::Action.find_or_create_by(name: action) }.compact
+    element = Adeia::Element.find_or_create_by(name: element_name)
+    return element, actions
+  end
+
+  def self.conditions(args)
+    element, actions = fetch_element_and_actions(args.fetch(:element), args.fetch(:actions, []))
+    return {
+      owner: args.fetch(:owner),
+      element: element,
+      permission_type: self.permission_types[args.fetch(:type, "all_entries")],
+      read_right: args[:read],
+      create_right: args[:create],
+      update_right: args[:update],
+      destroy_right: args[:destroy],
+      resource_id: args[:resource_id],
+      actions: actions
+    }.reject { |k, v| v.blank? }
+  end
+
   private
 
   def presence_of_resource_id
@@ -42,7 +76,7 @@ class Adeia::Permission < ActiveRecord::Base
   end
 
   def presence_of_a_right
-    if permission_type == "on_ownerships" && !(read_right || update_right || destroy_right || actions.any?)
+    unless read_right || update_right || destroy_right || actions.any?
       errors[:base] << I18n.t("errors.messages.right_required")
     end
   end

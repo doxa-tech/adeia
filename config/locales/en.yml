@@ -6,7 +6,7 @@ en:
       missing_params: "params %{params} is missing !"
   errors:
     messages:
-      right_required: "If you want to add a permission linked to user's ownerships, please check at least one right or add an action"
+      right_required: "Please check at least one right or add an action"
   application:
     back: "Back"
     close: "Close"
