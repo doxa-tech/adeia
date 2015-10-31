@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    adeia (0.5.3)
+    adeia (0.7.1)
       rails (~> 4.2.4)
       snaptable
 
