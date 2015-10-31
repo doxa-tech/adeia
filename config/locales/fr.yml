@@ -7,3 +7,76 @@ fr:
   errors:
     messages:
       right_required: "Lorsque vous voulez créer une permission liée aux possessions de l'utilisateur, vous devez cocher au moins un droit ou ajouter une action"
+  application:
+    back: "Retour"
+    close: "fermer"
+    errors: 
+      one: "Le formulaire contient 1 erreur"
+      other: "Le formulaire contient %{count} erreurs"
+    header:
+      permissions: "Permissions"
+      tokens: "Tokens"
+      groups: "Groupes"
+  adeia:
+    permissions:
+      form:
+        actions:
+          add: "Ajouter une action"
+          destroy: "Supprimer"
+      index:
+        title: "Permissions"
+      new:
+        title: "Créer une permission"
+      create:
+        success: "Permission créée !"
+      edit:
+        title: "Editer une permission"
+      update:
+        success: "Permission enregistrée !"
+      destroy:
+        success: "Permission supprimée !"
+    tokens:
+      index:
+        title: "Tokens"
+      new:
+        title: "Créer un token d'accès"
+      create:
+        success: "Token d'accès créé !"
+      edit:
+        title: "Editer un token d'accès"
+      update:
+        success: "Token d'accès enregistré !"
+      destroy:
+        success: "Token d'accès supprimé !"
+    groups:
+      index:
+        title: "Groupes"
+      new:
+        title: "Créer un groupe"
+      create:
+        success: "Groupe créé !"
+      edit:
+        title: "Editer un groupe"
+      update:
+        success: "Groupe enregistré !"
+      destroy:
+        success: "Groupe supprimé !"
+  attributes:
+  activerecord:
+    attributes:
+      adeia/permission:
+        permission_type: "Type"
+        global_owner: "Priopriétaire"
+        read_right: "Lecture"
+        create_right: "Ecriture"
+        update_right: "Edition"
+        destroy_right: "Suppression"
+        resource_id: "ID de la ressource"
+      adeia/token:
+        exp_at: "Expiration"
+        is_valid: "Valide ?"
+  adeia/permission:
+    permission_types:
+      all_entries: "Tous"
+      on_ownerships: "Possessions"
+      on_entry: "Une entrée"
