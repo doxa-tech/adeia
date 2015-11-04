@@ -3,7 +3,7 @@ require "rails_helper"
 describe ArticlesController, :type => :controller do
   context "with a logged in user" do
     before(:each) do
-      @user = User.create!(name: "admin", password: "12341", password_confirmation: "12341")
+      @user = create(:user)
       sign_in @user
     end
 
@@ -119,39 +119,5 @@ describe ArticlesController, :type => :controller do
       end
 
     end
-
-    describe "POST #create" do
-
-      it "responds successfully" do
-        expect{ post :create, article: attributes_for(:article) }.not_to raise_error
-      end
-
-    end
-
-    describe "PATCH #update" do
-
-      it "responds successfully" do
-        article = create(:article)
-        expect{ patch :update, id: article.id, article: attributes_for(:article) }.not_to raise_error
-      end
-
-    end
-  end
-
-  describe "POST #create" do
-
-    it "required to be logged in" do
-      expect { post :create, article: attributes_for(:article) }.to raise_error Adeia::LoginRequired
-    end
-
-  end
-
-  describe "PATCH #update" do
-
-    it "required to be logged in" do
-      article = create(:article)
-      expect { patch :update, id: article.id, article: attributes_for(:article) }.to raise_error Adeia::LoginRequired
-    end
-
   end
 end

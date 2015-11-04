@@ -15,7 +15,7 @@ module Adeia
       case controller.action_name
       when "index"
         controller.authorize_and_load_records!
-      when "edit", "update", "destroy"
+      when "show", "edit", "update", "destroy"
         controller.load_and_authorize!
       else
         controller.authorize!
@@ -73,7 +73,11 @@ module Adeia
     end
 
     def can?
-      authorization.can?
+      instance_variable_get_or_set(:can?)
+    end
+
+    def rights?
+      instance_variable_get_or_set(:rights?)
     end
 
     private
@@ -88,6 +92,16 @@ module Adeia
 
     def resource_name
       resource_class.model_name.element
+    end
+
+    def var_name(method)
+      [method, @controller_name, @action_name, @resource.try(:model_name).try(:human), @resource.try(:id)].map do |s|
+        s.to_s.gsub("/", "_").delete("?") if s
+      end.compact.join("_").prepend("@")
+    end
+
+    def instance_variable_get_or_set(method)
+      @controller.instance_variable_get(var_name(method)) || @controller.instance_variable_set(var_name(method), authorization.send(method))
     end
 
 

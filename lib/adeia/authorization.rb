@@ -21,10 +21,14 @@ module Adeia
       end
     end
 
-    def can?
-      action_rights = @user.nil? ? {} : send("#{@action}_rights")
+    def rights?
+      action_rights = @user.nil? ? {} : send("#{right_name}_rights")
       merge_permissions(token_rights(right_name), action_rights)
-      @rights.any? && authorize?
+      @rights.any?
+    end
+
+    def can?
+      rights? && authorize?
     end
 
     private
@@ -46,7 +50,7 @@ module Adeia
     end
 
     def right_names
-      {read: [:index, :show], create: [:new, :create], update: [:edit, :update], destroy: [:destroy]} 
+      {read: [:read, :index, :show], create: [:new, :create], update: [:edit, :update], destroy: [:destroy]} 
     end
 
     def right_name

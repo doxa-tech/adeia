@@ -33,11 +33,11 @@ class Adeia::Permission < ActiveRecord::Base
     "#{id} - #{element.name} - R:#{read_right} - C:#{create_right}- U:#{update_right} - D:#{destroy_right} - #{resource_id} - #{actions.to_a}"
   end
 
-  def self.add(**args)
+  def self.add!(**args)
     self.create!(**conditions(args))
   end
 
-  def self.find_or_add_by(**args)
+  def self.find_or_add_by!(**args)
     conditions = conditions(args)
     if permission = self.where(**conditions).first
       permission
@@ -46,14 +46,15 @@ class Adeia::Permission < ActiveRecord::Base
     end
   end
 
-  def self.fetch_element_and_actions(element_name, action_names)
-    actions = action_names.map { |action| Adeia::Action.find_or_create_by(name: action) }.compact
-    element = Adeia::Element.find_or_create_by(name: element_name)
+  def self.fetch_element_and_actions!(element_name, action_names)
+    actions = action_names.map { |action| Adeia::Action.find_or_create_by!(name: action) }.compact
+    element = Adeia::Element.find_or_create_by!(name: element_name)
     return element, actions
   end
 
   def self.conditions(args)
-    element, actions = fetch_element_and_actions(args.fetch(:element), args.fetch(:actions, []))
+    args[:read] = args[:create] = args[:update] = args[:destroy] = true if args[:full]
+    element, actions = fetch_element_and_actions!(args.fetch(:element), args.fetch(:actions, []))
     return {
       owner: args.fetch(:owner),
       element: element,

@@ -30,4 +30,12 @@ module Adeia
 
   end
 
+  class MissingUserModel < Error
+
+    def to_s
+      I18n.t("exceptions.messages.missing_user_model", params: @params)
+    end
+
+  end
+
 end

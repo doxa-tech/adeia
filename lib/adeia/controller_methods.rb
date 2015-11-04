@@ -48,6 +48,11 @@ module Adeia
       ControllerResource.new(self, **args).can?
     end
 
+    def rights?(action, controller=nil, resource=nil)
+      args = { action: action, controller: controller, resource: resource }
+      ControllerResource.new(self, **args).rights?
+    end
+
     # Redirect the user to the stored url or the default one provided
     # 
     # * *Args*    :

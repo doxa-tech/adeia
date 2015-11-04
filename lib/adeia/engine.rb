@@ -1,5 +1,7 @@
 require "adeia/controller_methods"
 require "adeia/helpers/sessions_helper"
+require "adeia/helpers/user_helper"
+require "adeia/exceptions"
 
 module Adeia
   class Engine < ::Rails::Engine
@@ -12,6 +14,16 @@ module Adeia
       g.assets false
       g.helper false
       g.factory_girl false
+    end
+
+    initializer 'Adeia.requirements' do |app|
+      unless Rails.env.test?
+        raise MissingUserModel unless defined? User
+      end
+    end
+
+    initializer 'Adeia.user_addictions' do |app|
+      User.send :include, Adeia::Helpers::UserHelper
     end
 
     initializer 'Adeia.controller_methods' do |app|
