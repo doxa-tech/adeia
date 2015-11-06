@@ -19,7 +19,7 @@ module Adeia
 
     def self.included(base)
       base.extend ClassMethods
-      base.helper_method :can?
+      base.helper_method :can?, :rights?
     end
 
     def load_and_authorize!(**args)
@@ -43,14 +43,12 @@ module Adeia
       raise LoginRequired unless signed_in?
     end
 
-    def can?(action, controller=nil, resource=nil)
-      args = { action: action, controller: controller, resource: resource }
-      ControllerResource.new(self, **args).can?
+    def can?(action, element, resource=nil)
+      ControllerResource.new(self, action: action).authorized?(:can?, element, resource)
     end
 
-    def rights?(action, controller=nil, resource=nil)
-      args = { action: action, controller: controller, resource: resource }
-      ControllerResource.new(self, **args).rights?
+    def rights?(action, element, resource=nil)
+      ControllerResource.new(self, action: action).authorized?(:rights?, element, resource)
     end
 
     # Redirect the user to the stored url or the default one provided

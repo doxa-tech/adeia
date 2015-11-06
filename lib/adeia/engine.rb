@@ -17,8 +17,10 @@ module Adeia
     end
 
     initializer 'Adeia.requirements' do |app|
-      unless Rails.env.test?
-        raise MissingUserModel unless defined? User
+      begin
+        User
+      rescue NameError
+        raise MissingUserModel
       end
     end
 

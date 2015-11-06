@@ -72,12 +72,9 @@ module Adeia
       authorization.check_permissions!
     end
 
-    def can?
-      instance_variable_get_or_set(:can?)
-    end
-
-    def rights?
-      instance_variable_get_or_set(:rights?)
+    def authorized?(method, element, resource)
+      @controller_name, @resource = get_controller_and_resource(element, resource)
+      instance_variable_get_or_set(method)
     end
 
     private
@@ -94,16 +91,30 @@ module Adeia
       resource_class.model_name.element
     end
 
+    def controller_name(resource)
+      resource.model_name.collection
+    end
+
     def var_name(method)
-      [method, @controller_name, @action_name, @resource.try(:model_name).try(:human), @resource.try(:id)].map do |s|
-        s.to_s.gsub("/", "_").delete("?") if s
-      end.compact.join("_").prepend("@")
+      [method, @controller_name, @action_name, @resource.try(:model_name).try(:human), @resource.try(:id)].compact.map do |s|
+        s.to_s.gsub("/", "_").delete("?")
+      end.join("_").prepend("@")
     end
 
     def instance_variable_get_or_set(method)
       @controller.instance_variable_get(var_name(method)) || @controller.instance_variable_set(var_name(method), authorization.send(method))
     end
 
+    def get_controller_and_resource(element, resource)
+      if element.is_a? String
+        return element, resource
+      elsif element.is_a? ActiveRecord::Base
+        return controller_name(element), element
+      elsif element.is_a? Array
+        resource = element.second
+        return "#{element.first}/#{controller_name(resource)}", resource
+      end
+    end
 
     # Store the current url in a cookie
     # 

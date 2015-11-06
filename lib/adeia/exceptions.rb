@@ -33,7 +33,7 @@ module Adeia
   class MissingUserModel < Error
 
     def to_s
-      I18n.t("exceptions.messages.missing_user_model", params: @params)
+      "A model `User` is missing in the app !"
     end
 
   end

@@ -4,7 +4,6 @@ fr:
       login_required: "Veuillez vous connecter pour accéder à cette page !"
       access_denied: "Vous n'êtes pas autorisé à accéder à cette page !"
       missing_params: "Le paramètre %{params} est manquant !"
-      missing_user_model: "Aucun modèle `User` trouvé dans votre application !"
   errors:
     messages:
       right_required: "Vous devez cocher au moins un droit ou ajouter une action"

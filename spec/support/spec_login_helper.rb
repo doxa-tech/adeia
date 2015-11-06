@@ -11,6 +11,11 @@ module SpecLoginHelper
   def current_user=(user)
     @current_user = user
   end
+
+  def sign_in_user
+    @user = create(:user)
+    sign_in @user
+  end
 end
 
 RSpec.configure do |config|
