@@ -130,7 +130,7 @@ module Adeia
 
     end
 
-     describe "#rights?" do
+    describe "#rights?" do
 
       controller do
         def index

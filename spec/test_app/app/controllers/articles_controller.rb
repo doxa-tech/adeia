@@ -1,6 +1,6 @@
+# Used to test #authorize!, #load_and_authorize & load_and_authorize!
 class ArticlesController < ApplicationController
-  load_and_authorize only: [:edit]
-  require_login only: [:update]
+  load_and_authorize except: [:index, :show, :new]
 
   def index
     authorize_and_load_records!
@@ -19,7 +19,6 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    require_login!
     @article = Article.new(article_params)
     @article.user = current_user
     if @article.save

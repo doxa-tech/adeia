@@ -40,7 +40,10 @@ module Adeia
     end
 
     def require_login!
-      raise LoginRequired unless signed_in?
+      unless signed_in?
+        store_location
+        raise LoginRequired
+      end
     end
 
     def can?(action, element, resource=nil)
@@ -60,6 +63,16 @@ module Adeia
     def redirect_back_or(default, message = nil)
       redirect_to(cookies[:return_to] || default, message)
       cookies.delete(:return_to)
+    end
+
+    # Store the current url in a cookie
+    # 
+    # * *Args*    :
+    # 
+    # * *Returns* :
+    #
+    def store_location
+      cookies[:return_to] = request.fullpath if request.get?
     end
 
   end

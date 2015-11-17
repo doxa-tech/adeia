@@ -33,7 +33,7 @@ module Adeia
       @token = args.fetch(:token, @controller.request.GET[:token])
       @resource = args[:resource]
       @user = @controller.current_user
-      store_location
+      @controller.store_location
     end
 
     def load_resource
@@ -114,16 +114,6 @@ module Adeia
         resource = element.second
         return "#{element.first}/#{controller_name(resource)}", resource
       end
-    end
-
-    # Store the current url in a cookie
-    # 
-    # * *Args*    :
-    # 
-    # * *Returns* :
-    #
-    def store_location
-      @controller.request.cookie_jar[:return_to] = @controller.request.fullpath
     end
 
   end
