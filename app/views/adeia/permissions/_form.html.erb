@@ -5,8 +5,8 @@
   <%= f.label :permission_type %>
   <%= f.select :permission_type, options_for_enum(@permission, :permission_type) %>
   
-  <%= f.label :element_id %>
-  <%= f.collection_select :element_id, Adeia::Element.all, :id, :name %>
+  <%= f.label :adeia_element_id %>
+  <%= f.collection_select :adeia_element_id, Adeia::Element.all, :id, :name %>
 
   <%= f.label :global_owner %>
   <%= f.grouped_collection_select :global_owner, [ User, Adeia::Group ], :all, :human_name, :to_global_id, :name %>
