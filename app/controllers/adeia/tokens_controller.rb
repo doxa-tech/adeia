@@ -41,7 +41,7 @@ module Adeia
     private
 
     def token_params
-      params.require(:token).permit(:permission_id, :exp_at, :is_valid)
+      params.require(:token).permit(:adeia_permission_id, :exp_at, :is_valid)
     end
   end
 end
