@@ -102,7 +102,7 @@ By default, the methods (except `require_login!`) use the following parameters:
 
 * controller: the controller's name
 * action: the action's name
-* token: GET parameter (`params[:token]`)
+* token: GET parameter `token`
 * resource: fetch the resource from controller's name
 
 You can override those parameters when invoking the method:

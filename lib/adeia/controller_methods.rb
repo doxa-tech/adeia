@@ -35,6 +35,11 @@ module Adeia
       return controller_resource.load_records
     end
 
+    def load_records(**args)
+      controller_resource = ControllerResource.new(self, **args)
+      return controller_resource.load_records
+    end
+
     def authorize!(**args)
       ControllerResource.new(self, **args).authorize!
     end
@@ -55,7 +60,7 @@ module Adeia
     end
 
     # Redirect the user to the stored url or the default one provided
-    # 
+    #
     # * *Args*    :
     #   - default path to redirect to
     # * *Returns* :
@@ -66,9 +71,9 @@ module Adeia
     end
 
     # Store the current url in a cookie
-    # 
+    #
     # * *Args*    :
-    # 
+    #
     # * *Returns* :
     #
     def store_location
