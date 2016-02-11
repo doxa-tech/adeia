@@ -29,8 +29,15 @@ mount Adeia::Engine => "/adeia"
 ### Tasks
 
 The first task to run is `rake adeia:permissions elements="first_element, second_element"`. It creates the given elements in the database and a superadmin group which has all the permissions.
-Then you can run `adeia:superuser user_id=your_id`, which add the given user in the superadmin group.
-If you need to add new groups, run `adeia:groups groups="first_group, second_group"`.
+Then you can run `rake adeia:superuser user_id=your_id`, which add the given user in the superadmin group.
+If you need to add new groups, run `rake adeia:groups groups="first_group, second_group"`.
+
+For example:
+
+```
+rake adeia:permissions elements="admin/galleries, admin/articles, admin/categories"
+rake adeia:superuser user_id=59
+```
 
 ## Requirements
 
