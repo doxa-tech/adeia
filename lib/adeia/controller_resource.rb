@@ -38,7 +38,7 @@ module Adeia
 
     def load_resource
       begin
-        @resource = resource_class.find(@controller.params.fetch(:id))
+        @resource ||= resource_class.find(@controller.params.fetch(:id))
         @controller.instance_variable_set("@#{resource_name}", @resource)
       rescue KeyError
         raise MissingParams.new(:id)
@@ -81,9 +81,9 @@ module Adeia
 
     def resource_class
       begin
-        @controller.controller_path.classify.constantize
+        @controller_name.classify.constantize
       rescue NameError
-        @controller.controller_name.classify.constantize
+        @controller_name.classify.demodulize.constantize
       end
     end
 

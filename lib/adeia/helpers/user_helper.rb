@@ -16,6 +16,19 @@ module Adeia
         has_many :permissions, class_name: "Adeia::Permission"
       end
 
+      def add_to_group(name)
+        group = Group.find_by_name
+        Adeia::GroupUser.create(group: group, user: self)
+      end
+
+      def permissions
+        @permissions ||= Adeia::Permission.where(owner: groups << self)
+      end
+
+      def groups
+        @groups ||= Adeia::Group.joins(:group_users).where(adeia_group_users: { user_id: self.id })
+      end
+
     end
   end
 end

@@ -26,6 +26,12 @@ Then include the engine's routes in your `routes.rb`. The URL on which you mount
 mount Adeia::Engine => "/adeia"
 ```
 
+### Tasks
+
+The first task to run is `rake adeia:permissions elements="first_element, second_element"`. It creates the given elements in the database and a superadmin group which has all the permissions.
+Then you can run `adeia:superuser user_id=your_id`, which add the given user in the superadmin group.
+If you need to add new groups, run `adeia:groups groups="first_group, second_group"`.
+
 ## Requirements
 
 Requires a User model with:
@@ -141,6 +147,13 @@ class EventsController < ApplicationController
 end
 ```
 
-### Other methods
+### Controller methods
 
 When an authorization exception is raised by the engine, it automatically store the current user's location in a cookie. The called method is `store_location` and is available in your controllers. Then you can use the method `redirect_back_or(default, message = nil)` which either redirects to the stored location if any or redirects the default provided path, with an optional message.
+
+## Model methods
+
+TODO
+
+* User model
+* Permission model

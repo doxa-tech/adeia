@@ -23,4 +23,12 @@ namespace :adeia do
     end
   end
 
+  desc "Create groups"
+  task groups: :environment do
+    groups = ENV["groups"].split(",").map { |e| e.strip } if ENV["groups"].present?
+    if groups.present?
+      groups.each { |group| Adeia::Group.create!(name: group) }
+    end
+  end
+
 end
