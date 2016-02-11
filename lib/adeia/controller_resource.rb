@@ -33,6 +33,7 @@ module Adeia
       @token = args.fetch(:token, @controller.request.GET[:token])
       @resource = args[:resource]
       @user = @controller.current_user
+      @controller.current_user ||= User.new # if not signed in but authorized
       @controller.store_location
     end
 
