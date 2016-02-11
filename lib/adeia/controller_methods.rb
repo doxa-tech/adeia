@@ -65,8 +65,8 @@ module Adeia
     #   - default path to redirect to
     # * *Returns* :
     #
-    def redirect_back_or(default, message = nil)
-      redirect_to(cookies[:return_to] || default, message)
+    def redirect_back_or(default, **args)
+      redirect_to(cookies[:return_to] || default, **args)
       cookies.delete(:return_to)
     end
 

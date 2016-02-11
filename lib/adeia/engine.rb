@@ -19,21 +19,16 @@ module Adeia
     initializer 'Adeia.requirements' do |app|
       begin
         User
+        require 'adeia/guest_user'
       rescue NameError
         raise MissingUserModel
       end
     end
 
-    initializer 'Adeia.user_addictions' do |app|
-      User.send :include, Adeia::Helpers::UserHelper
-    end
-
-    initializer 'Adeia.controller_methods' do |app|
-      ActionController::Base.send :include, Adeia::ControllerMethods
-    end
-
-    initializer 'Adeia.sessions_helper' do |app|
+    config.to_prepare do
       ActionController::Base.send :include, Adeia::Helpers::SessionsHelper
+      ActionController::Base.send :include, Adeia::ControllerMethods
+      User.send :include, Adeia::Helpers::UserHelper
     end
 
   end
