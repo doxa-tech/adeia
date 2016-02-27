@@ -32,6 +32,7 @@ module Adeia
       @controller_name = args.fetch(:controller, @controller.controller_path)
       @token = args.fetch(:token, @controller.request.GET[:token])
       @resource = args[:resource]
+      @model = args.fetch(:model, resource_class)
       @user = @controller.current_user
       @controller.current_user ||= GuestUser.new # if not signed in but authorized
       @controller.store_location
@@ -39,7 +40,7 @@ module Adeia
 
     def load_resource
       begin
-        @resource ||= resource_class.find(@controller.params.fetch(:id))
+        @resource ||= @model.find(@controller.params.fetch(:id))
         @controller.instance_variable_set("@#{resource_name}", @resource)
       rescue KeyError
         raise MissingParams.new(:id)
@@ -50,13 +51,13 @@ module Adeia
       rights = authorization.read_rights.merge(authorization.token_rights(:read)) { |key, v1, v2| v1 + v2 }
       rights, resource_ids = rights[:rights], rights[:resource_ids]
       @records ||= if rights.any? { |r| r.permission_type == "all_entries" }
-        resource_class.all
+        @model.all
       elsif rights.any? { |r| r.permission_type == "on_ownerships" }
-        resource_class.where("user_id = ? OR id IN (?)", @user.id, resource_ids)
+        @model.where("user_id = ? OR id IN (?)", @user.id, resource_ids)
       elsif rights.any? { |r| r.permission_type == "on_entry" }
-        resource_class.where(id: resource_ids)
+        @model.where(id: resource_ids)
       else
-        resource_class.none
+        @model.none
       end
       @controller.instance_variable_set("@#{resource_name.pluralize}", @records)
     end
@@ -89,7 +90,7 @@ module Adeia
     end
 
     def resource_name
-      resource_class.model_name.element
+      @model.model_name.element
     end
 
     def controller_name(resource)
