@@ -32,7 +32,7 @@ module Adeia
       @controller_name = args.fetch(:controller, @controller.controller_path)
       @token = args.fetch(:token, @controller.request.GET[:token])
       @resource = args[:resource]
-      @model = args.fetch(:model, resource_class)
+      @model = args[:model] || resource_class
       @user = @controller.current_user
       @controller.current_user ||= GuestUser.new # if not signed in but authorized
       @controller.store_location
