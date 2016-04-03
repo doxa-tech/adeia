@@ -17,7 +17,7 @@ module Adeia
       end
 
       def add_to_group(name)
-        group = Group.find_by_name
+        group = Group.find_by_name(name)
         Adeia::GroupUser.create(group: group, user: self)
       end
 

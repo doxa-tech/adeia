@@ -82,10 +82,14 @@ module Adeia
     private
 
     def resource_class
-      begin
-        @controller_name.classify.constantize
-      rescue NameError
-        @controller_name.classify.demodulize.constantize
+      if @resource
+        @resource.class
+      else
+        begin
+          @controller_name.classify.constantize
+        rescue NameError
+          @controller_name.classify.demodulize.constantize
+        end
       end
     end
 
