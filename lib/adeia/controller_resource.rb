@@ -26,6 +26,17 @@ module Adeia
       controller.require_login!
     end
 
+    def self.get_controller_and_resource(element, resource)
+      if element.is_a? String
+        return element, resource
+      elsif element.is_a? ActiveRecord::Base
+        return controller_name(element), element
+      elsif element.is_a? Array
+        resource = element.second
+        return "#{element.first}/#{controller_name(resource)}", resource
+      end
+    end
+
     def initialize(controller, **args)
       @controller = controller
       @action_name = args.fetch(:action, @controller.action_name)
@@ -74,9 +85,8 @@ module Adeia
       authorization.check_permissions!
     end
 
-    def authorized?(method, element, resource)
-      @controller_name, @resource = get_controller_and_resource(element, resource)
-      instance_variable_get_or_set(method)
+    def authorized?(method)
+      @controller.instance_variable_get(var_name(method)) || @controller.instance_variable_set(var_name(method), authorization.send(method))
     end
 
     private
@@ -97,29 +107,14 @@ module Adeia
       @model.model_name.element
     end
 
-    def controller_name(resource)
-      resource.model_name.collection
-    end
-
     def var_name(method)
       [method, @controller_name, @action_name, @resource.try(:model_name).try(:human), @resource.try(:id)].compact.map do |s|
         s.to_s.gsub("/", "_").delete("?")
       end.join("_").prepend("@")
     end
 
-    def instance_variable_get_or_set(method)
-      @controller.instance_variable_get(var_name(method)) || @controller.instance_variable_set(var_name(method), authorization.send(method))
-    end
-
-    def get_controller_and_resource(element, resource)
-      if element.is_a? String
-        return element, resource
-      elsif element.is_a? ActiveRecord::Base
-        return controller_name(element), element
-      elsif element.is_a? Array
-        resource = element.second
-        return "#{element.first}/#{controller_name(resource)}", resource
-      end
+    def self.controller_name(resource)
+      resource.model_name.collection
     end
 
   end

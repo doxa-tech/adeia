@@ -52,11 +52,13 @@ module Adeia
     end
 
     def can?(action, element, resource=nil)
-      ControllerResource.new(self, action: action).authorized?(:can?, element, resource)
+      controller, resource = ControllerResource.get_controller_and_resource(element, resource)
+      ControllerResource.new(self, action: action, controller: controller, resource: resource).authorized?(:can?)
     end
 
     def rights?(action, element, resource=nil)
-      ControllerResource.new(self, action: action).authorized?(:rights?, element, resource)
+      controller, resource = ControllerResource.get_controller_and_resource(element, resource)
+      ControllerResource.new(self, action: action, controller: controller, resource: resource).authorized?(:rights?)
     end
 
     # Redirect the user to the stored url or the default one provided
