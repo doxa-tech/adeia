@@ -5,7 +5,7 @@ class TokenTable < BaseTable
   end
 
   def attributes
-    [:id, :adeia_permission_id, :is_valid, :exp_at, :created_at, :updated_at]
+    [:id, :token, :adeia_permission_id, :is_valid, :exp_at, :created_at, :updated_at]
   end
 
 end
