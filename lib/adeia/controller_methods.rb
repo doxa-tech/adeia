@@ -79,7 +79,9 @@ module Adeia
     # * *Returns* :
     #
     def store_location
-      cookies[:return_to] = request.fullpath if request.get?
+      if request.get? && Adeia.api_patterns.all? { |pattern| /^#{pattern}$/.match(request.path).nil? }
+        cookies[:return_to] = { value: request.fullpath, expires: 2.minutes.from_now }
+      end
     end
 
   end
