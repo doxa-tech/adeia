@@ -1,0 +1,13 @@
+<%= form_for @group_user do |f| %>
+
+  <%= render 'error_messages', object: f.object %>
+
+  <%= f.label :user_id %>
+  <%= f.collection_select :user_id, User.all, :id, :name %>
+
+  <%= f.label :adeia_group_id %>
+  <%= f.collection_select :adeia_group_id, Adeia::Group.all, :id, :name %>
+
+  <%= f.submit %>
+
+<% end %>

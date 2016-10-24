@@ -2,7 +2,7 @@ namespace :adeia do
 
   desc "Create the elements and a group with all the privileges"
   task permissions: :environment do
-    elements =  %w(adeia/permissions adeia/tokens adeia/groups)
+    elements =  %w(adeia/permissions adeia/tokens adeia/groups adeia/group_users)
     elements.concat(ENV["elements"].split(",").map { |e| e.strip }) if ENV["elements"].present?
     owner = Adeia::Group.find_or_create_by!(name: "superadmin")
     elements.each do |element|

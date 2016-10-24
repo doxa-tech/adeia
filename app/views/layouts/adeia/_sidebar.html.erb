@@ -1,3 +1,4 @@
 <%= link_to t("application.header.permissions"), permissions_path if can? :read, "adeia/permissions" %>
 <%= link_to t("application.header.tokens"), tokens_path if can? :read, "adeia/tokens" %>
 <%= link_to t("application.header.groups"), groups_path if can? :read, "adeia/groups"%>
+<%= link_to t("application.header.group_users"), group_users_path if can? :read, "adeia/group_users" %>

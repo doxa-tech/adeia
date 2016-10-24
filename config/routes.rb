@@ -6,4 +6,6 @@ Adeia::Engine.routes.draw do
 
   resources :groups, except: :show
 
+  resources :group_users, except: :show
+
 end
