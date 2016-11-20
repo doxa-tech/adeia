@@ -2,6 +2,17 @@
 
 An discretionary authorization gem for Rails that allows you to have the complete control of your app.
 
+## Requirements
+
+Requires a User model with:
+
+* An method `name`, returning the name of the user.
+* A column `remember_token`, containing a generated token used for the authentification.
+
+```
+rails g model User name:string remembre_token:string
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -40,13 +51,6 @@ For example:
 rake adeia:permissions elements="admin/galleries, admin/articles, admin/categories"
 rake adeia:superuser user_id=59
 ```
-
-## Requirements
-
-Requires a User model with:
-
-* An method `name`, returning the name of the user.
-* A column `remember_token`, containing a generated token used for the authentification.
 
 ## Documentation
 
