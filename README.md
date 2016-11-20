@@ -26,6 +26,8 @@ Then include the engine's routes in your `routes.rb`. The URL on which you mount
 mount Adeia::Engine => "/adeia"
 ```
 
+Finally copy the migrations by running `rake adeia:install:migrations` in your terminal.
+
 ### Tasks
 
 The first task to run is `rake adeia:permissions elements="first_element, second_element"`. It creates the given elements in the database and a superadmin group which has all the permissions.
