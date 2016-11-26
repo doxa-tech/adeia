@@ -117,7 +117,7 @@ def index
 end
 ```
 
-By default, the methods (except `require_login!`) use the following parameters:
+By default, each method (except `require_login!`) use the following parameters:
 
 * controller: the controller's name
 * action: the action's name
