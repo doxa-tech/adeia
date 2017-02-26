@@ -10,7 +10,7 @@ Requires a User model with:
 * A column `remember_token`, containing a generated token used for the authentification.
 
 ```
-rails g model User name:string remembre_token:string
+rails g model User name:string remember_token:string
 ```
 
 ## Installation
