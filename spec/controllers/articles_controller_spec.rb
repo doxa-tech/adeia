@@ -81,12 +81,12 @@ describe ArticlesController, :type => :controller do
       end
 
       it "responds successfully" do
-        get :show, id: @article.id
+        get :show, params: { id: @article.id }
         expect(response).to be_success
       end
 
       it "loads the record" do
-        get :show, id: @article.id
+        get :show, params: { id: @article.id }
         expect(assigns(:article)).to eq @article
       end
 
@@ -109,12 +109,12 @@ describe ArticlesController, :type => :controller do
       end
 
       it "responds successfully" do
-        get :edit, id: @article.id
+        get :edit, params: { id: @article.id }
         expect(response).to be_success
       end
 
       it "loads the record" do
-        get :edit, id: @article.id
+        get :edit, params: { id: @article.id }
         expect(assigns(:article)).to eq @article
       end
 

@@ -8,7 +8,7 @@ module Adeia
       controller do
         def index
           require_login!
-          render nothing: true
+          head :ok
         end
       end
 
@@ -29,7 +29,7 @@ module Adeia
         require_login
 
         def index
-          render nothing: true
+          head :ok
         end
       end
 
@@ -51,7 +51,7 @@ module Adeia
         controller do
           def index
             @can = can? :read, "articles"
-            render nothing: true
+            head :ok
           end
         end
 
@@ -79,7 +79,7 @@ module Adeia
           def index
             @article = Article.create(title: "Rspec tests", content: "Lorem ipsum", id: 100)
             @can = can? :read, @article
-            render nothing: true
+            head :ok
           end
         end
 
@@ -97,7 +97,7 @@ module Adeia
           def index
             @article = Article.create(title: "Rspec tests", content: "Lorem ipsum", id: 100)
             @can = can? :read, "letters", @article
-            render nothing: true
+            head :ok
           end
         end
 
@@ -116,7 +116,7 @@ module Adeia
           def index
             @article = Article.create(title: "Rspec tests", content: "Lorem ipsum", id: 100)
             @can = can? :read, [:admin, @article]
-            render nothing: true
+            head :ok
           end
         end
 
@@ -135,7 +135,7 @@ module Adeia
       controller do
         def index
           @rights = rights? :read, "articles"
-          render nothing: true
+          head :ok
         end
       end
 

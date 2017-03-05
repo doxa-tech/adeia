@@ -1,12 +1,13 @@
 require 'factory_girl_rails'
 require 'capybara/rspec'
 require 'rspec/active_model/mocks'
+require 'rails-controller-testing'
 
 FactoryGirl.definition_file_paths = [ File.join(File.dirname(__FILE__), '../spec/factories') ]
 FactoryGirl.find_definitions
 
 RSpec.configure do |config|
-  
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

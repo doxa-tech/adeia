@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def index
     require_login!
-    render text: "All the comments"
+    render plain: "All the comments"
   end
 
   def new
@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 
   def create
     require_login!
-    render text: "Comment created"
+    render plain: "Comment created"
   end
 
 end
