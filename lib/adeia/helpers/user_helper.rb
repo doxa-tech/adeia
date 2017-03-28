@@ -29,6 +29,10 @@ module Adeia
         @groups ||= Adeia::Group.joins(:group_users).where(adeia_group_users: { user_id: self.id })
       end
 
+      def belongs_to?(name)
+        Adeia::GroupUser.joins(:group).where(user_id: self.id, adeia_groups: { name: name }).exists?
+      end
+
     end
   end
 end

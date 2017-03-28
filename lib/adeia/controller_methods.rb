@@ -61,6 +61,7 @@ module Adeia
       ControllerResource.new(self, action: action, controller: controller, resource: resource).authorized?(:rights?)
     end
 
+
     # Redirect the user to the stored url or the default one provided
     #
     # * *Args*    :
