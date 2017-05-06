@@ -7,22 +7,22 @@ module Adeia
 
     def self.add_before_filter(controller_class, method, **args)
       controller_class.send(:before_action, args.slice(:only, :except, :if, :unless)) do |controller|
-        ControllerResource.send(method, controller)
+        ControllerResource.send(method, controller, **args)
       end
     end
 
-    def self.load_resource_or_records_and_authorize(controller)
+    def self.load_resource_or_records_and_authorize(controller, **args)
       case controller.action_name
       when "index"
-        controller.authorize_and_load_records!
+        controller.authorize_and_load_records!(**args)
       when "show", "edit", "update", "destroy"
-        controller.load_and_authorize!
+        controller.load_and_authorize!(**args)
       else
-        controller.authorize!
+        controller.authorize!(**args)
       end
     end
 
-    def self.require_login(controller)
+    def self.require_login(controller, **args)
       controller.require_login!
     end
 
@@ -98,7 +98,11 @@ module Adeia
         begin
           @controller_name.classify.constantize
         rescue NameError
-          @controller_name.classify.demodulize.constantize
+          begin
+            @controller_name.classify.demodulize.constantize
+          rescue NameError
+            nil
+          end
         end
       end
     end
