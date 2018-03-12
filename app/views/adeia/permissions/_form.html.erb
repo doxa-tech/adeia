@@ -4,7 +4,7 @@
 
   <%= f.label :permission_type %>
   <%= f.select :permission_type, options_for_enum(@permission, :permission_type) %>
-  
+
   <%= f.label :adeia_element_id %>
   <%= f.collection_select :adeia_element_id, Adeia::Element.all, :id, :name %>
 
@@ -31,6 +31,8 @@
       <div class="actions-fields">
         <%= action_f.label :name %>
         <%= action_f.text_field :name %>
+
+        <%= action_f.hidden_field :_destroy, identifier: "destroy" %>
 
         <button class="remove-fields" data-type="actions"><%= t "adeia.permissions.form.actions.destroy" %></button>
       </div>

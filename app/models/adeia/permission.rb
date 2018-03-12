@@ -24,7 +24,7 @@ class Adeia::Permission < ActiveRecord::Base
   end
 
   def autosave_associated_records_for_actions
-    self.actions = actions.reject{ |a| a._destroy == true }.map do |action|
+    self.actions = actions.reject{ |a| a.marked_for_destruction? }.map do |action|
       Adeia::Action.find_or_create_by(name: action.name)
     end
   end
