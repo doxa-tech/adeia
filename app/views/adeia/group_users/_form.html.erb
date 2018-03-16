@@ -3,7 +3,7 @@
   <%= render 'error_messages', object: f.object %>
 
   <%= f.label :user_id %>
-  <%= f.collection_select :user_id, User.all, :id, :name %>
+  <%= f.collection_select :user_id, User.all, :id, :email %>
 
   <%= f.label :adeia_group_id %>
   <%= f.collection_select :adeia_group_id, Adeia::Group.all, :id, :name %>
