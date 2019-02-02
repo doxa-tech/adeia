@@ -51,11 +51,19 @@ module Adeia
     end
 
     def user_groups
-      @user_groups ||= Adeia::Group.joins(:group_users).where(adeia_group_users: { user_id: @user.id }).to_a
+      if @user_groups.nil?
+        @user_groups = []
+        @user_groups = Adeia::Group.joins(:group_users).where(adeia_group_users: { user_id: @user.id }).to_a if @user
+      end
+      return @user_groups
     end
 
     def owners
-      @owners ||= user_groups.push @user
+      if @owners.nil?
+        @owners = user_groups
+        @owners = user_groups.push @user if @user
+      end
+      return @owners
     end
 
   end

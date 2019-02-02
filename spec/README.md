@@ -2,4 +2,4 @@
 
 If you need to run the migrations
 
-`bundle exec rake app:db:migrate`
+`bundle exec rake app:db:migrate RAILS_ENV=test`
