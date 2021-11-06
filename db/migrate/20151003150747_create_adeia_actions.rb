@@ -1,4 +1,4 @@
-class CreateAdeiaActions < ActiveRecord::Migration
+class CreateAdeiaActions < ActiveRecord::Migration[4.2]
   def change
     create_table :adeia_actions do |t|
       t.string :name

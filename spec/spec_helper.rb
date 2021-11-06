@@ -1,10 +1,10 @@
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'capybara/rspec'
 require 'rspec/active_model/mocks'
 require 'rails-controller-testing'
 
-FactoryGirl.definition_file_paths = [ File.join(File.dirname(__FILE__), '../spec/factories') ]
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = [ File.join(File.dirname(__FILE__), '../spec/factories') ]
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
 
@@ -16,6 +16,6 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
 end

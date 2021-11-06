@@ -14,7 +14,7 @@ describe ArticlesController, :type => :controller do
 
         it "responds successfully" do
           get :index
-          expect(response).to be_success
+          expect(response).to have_http_status(:success)
         end
 
         it "loads the records" do
@@ -82,7 +82,7 @@ describe ArticlesController, :type => :controller do
 
       it "responds successfully" do
         get :show, params: { id: @article.id }
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it "loads the record" do
@@ -97,7 +97,7 @@ describe ArticlesController, :type => :controller do
 
       it "responds successfully" do
         get :new
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
     end
@@ -110,7 +110,7 @@ describe ArticlesController, :type => :controller do
 
       it "responds successfully" do
         get :edit, params: { id: @article.id }
-        expect(response).to be_success
+        expect(response).to have_http_status(:success)
       end
 
       it "loads the record" do

@@ -1,4 +1,4 @@
-class CreateAdeiaPermissions < ActiveRecord::Migration
+class CreateAdeiaPermissions < ActiveRecord::Migration[4.2]
   def change
     create_table :adeia_permissions do |t|
       t.references :owner, polymorphic: true, index: true

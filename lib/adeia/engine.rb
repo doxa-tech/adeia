@@ -13,7 +13,7 @@ module Adeia
       g.test_framework :rspec
       g.assets false
       g.helper false
-      g.factory_girl false
+      g.factory_bot false
     end
 
     initializer 'Adeia.requirements' do |app|

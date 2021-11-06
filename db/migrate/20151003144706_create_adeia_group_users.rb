@@ -1,4 +1,4 @@
-class CreateAdeiaGroupUsers < ActiveRecord::Migration
+class CreateAdeiaGroupUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :adeia_group_users do |t|
       t.references :adeia_group, index: true, foreign_key: true

@@ -1,4 +1,4 @@
-class CreateAdeiaTokens < ActiveRecord::Migration
+class CreateAdeiaTokens < ActiveRecord::Migration[4.2]
   def change
     create_table :adeia_tokens do |t|
       t.string :token
