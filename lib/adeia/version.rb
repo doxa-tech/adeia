@@ -1,3 +1,3 @@
 module Adeia
-  VERSION = "0.15.4"
+  VERSION = "1.0.0"
 end

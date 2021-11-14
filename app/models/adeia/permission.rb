@@ -77,7 +77,7 @@ class Adeia::Permission < ActiveRecord::Base
   end
 
   def presence_of_a_right
-    unless read_right || update_right || destroy_right || actions.any?
+    unless read_right || create_right || update_right || destroy_right || actions.any?
       errors.add(:base, I18n.t("errors.messages.right_required"))
     end
   end
